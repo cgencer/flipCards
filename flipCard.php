@@ -9,19 +9,19 @@
  * that starts the plugin.
  *
  * @link              http://example.com
- * @since             1.0.0
- * @package           Plugin_Name
+ * @since             0.1
+ * @package           flipCard
  *
  * @wordpress-plugin
- * Plugin Name:       WordPress Plugin Boilerplate
- * Plugin URI:        http://example.com/plugin-name-uri/
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress dashboard.
- * Version:           1.0.0
- * Author:            Your Name or Your Company
+ * Plugin Name:       flipCard
+ * Plugin URI:        
+ * Description:       FlipCard wall, based on a jquery plugin
+ * Version:           0.1.0
+ * Author:            Cem Gencer
  * Author URI:        http://example.com/
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       plugin-name
+ * License:           Public Domain
+ * License URI:       http://www.gnu.org/philosophy/categories.html#PublicDomainSoftware
+ * Text Domain:       flipCard
  * Domain Path:       /languages
  */
 
@@ -34,28 +34,28 @@ if ( ! defined( 'WPINC' ) ) {
  * The code that runs during plugin activation.
  * This action is documented in includes/class-plugin-name-activator.php
  */
-function activate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-activator.php';
-	Plugin_Name_Activator::activate();
+function activate_flipCard() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-flipCard-activator.php';
+	flipCard_Activator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-plugin-name-deactivator.php
  */
-function deactivate_plugin_name() {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name-deactivator.php';
-	Plugin_Name_Deactivator::deactivate();
+function deactivate_flipCard() {
+	require_once plugin_dir_path( __FILE__ ) . 'includes/class-flipCard-deactivator.php';
+	flipCard_Deactivator::deactivate();
 }
 
-register_activation_hook( __FILE__, 'activate_plugin_name' );
-register_deactivation_hook( __FILE__, 'deactivate_plugin_name' );
+register_activation_hook( __FILE__, 'activate_flipCard' );
+register_deactivation_hook( __FILE__, 'deactivate_flipCard' );
 
 /**
  * The core plugin class that is used to define internationalization,
  * dashboard-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
+require plugin_dir_path( __FILE__ ) . 'includes/class-flipCard.php';
 
 /**
  * Begins execution of the plugin.
@@ -66,10 +66,10 @@ require plugin_dir_path( __FILE__ ) . 'includes/class-plugin-name.php';
  *
  * @since    1.0.0
  */
-function run_plugin_name() {
+function run_flipCard() {
 
-	$plugin = new Plugin_Name();
+	$plugin = new flipCard();
 	$plugin->run();
 
 }
-run_plugin_name();
+run_flipCard();
