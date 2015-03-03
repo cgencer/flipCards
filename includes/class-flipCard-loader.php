@@ -19,7 +19,7 @@
  *
  * @package    flipCard
  * @subpackage flipCard/includes
- * @author     Your Name <email@example.com>
+ * @author     Cem Gencer <o.cem.gencer@gmail.com>
  */
 class flipCard_Loader {
 

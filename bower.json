@@ -1,0 +1,29 @@
+{
+  "name": "flipCard",
+  "version": "0.1.0",
+  "homepage": "https://github.com/cgencer/flipCard",
+  "authors": [
+    "Cem Gencer <o.cem.gencer@gmail.com>"
+  ],
+  "description": "FlipCards for WordPress",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "wordpress",
+    "jquery",
+    "flip",
+    "css3"
+  ],
+  "license": "public domain",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "font-awesome": "~4.3.0"
+  }
+}

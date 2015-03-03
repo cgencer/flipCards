@@ -18,7 +18,7 @@
  *
  * @package    flipCard
  * @subpackage flipCard/public
- * @author     Your Name <email@example.com>
+ * @author     Cem Gencer <o.cem.gencer@gmail.com>
  */
 class flipCard_Public {
 

@@ -70,6 +70,8 @@ class flipCard {
 
 		$this->plugin_name = 'flipCard';
 		$this->version = '0.1.0';
+		$this->urlpath =  WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/';
+		$this->path = WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/';
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -153,6 +155,10 @@ class flipCard {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		add_action( 'wp_enqueue_scripts', array( __CLASS__ , 'enqueue_supportive_scripts' ) );
+
+		add_shortcode('flipCard', array( __CLASS__, 'render_shortcode' ) );
+
 	}
 
 	/**
@@ -195,4 +201,101 @@ class flipCard {
 		return $this->version;
 	}
 
+	public static function render_shortcode( $atts , $content ) {
+		$atts = shortcode_atts( array(
+			'col_md' => '4',
+			'col_sm' => '6',
+			'cover_photo' => $this->urlpath . 'assets/images/rotating_card_thumb.png',
+			'profile_photo' => $this->urlpath . 'assets/images/creative_tim.jpg',
+			'title' => __('flipCard' , 'flipCard' ),
+			'sub_title' => __('Flipping cards' , 'flipCard' ),
+			'address' => '--- adres ---',
+			'company' => '- company -',
+			'show_stars' => true,
+			'star_count' => 5,
+			'email' => '',
+			'phone' => '',
+			'website' => '',
+			'twitter' => '',
+			'facebook' => '',
+			'googleplus' => '',
+			'motto' => __('spot text' , 'flipCard' )
+
+			), $atts, 'card' );
+
+		if (!$content) {
+			$content = __('Tim symbolizes the creative spirit inside of each and everyone of us. A designer by trade, he enjoys making the World Wide Web a more beautiful place and helping others do the same.' , 'flipCard');
+		}
+
+		$html  ='<div class="col-md-'.$atts['col_md'].' col-sm-'.$atts['col_sm'].'">';
+		$html .='		 <div class="card-container">';
+		$html .='			<div class="card">';
+		$html .='				<div class="front">';
+		$html .='					<div class="cover">';
+		$html .='						<img src="'.$atts['cover_photo'].'"/>';
+		$html .='					</div>';
+		$html .='					<div class="user">';
+		$html .='						<img class="img-circle" src="'.$atts['profile_photo'].'"/>';
+		$html .='					</div>';
+		$html .='					<div class="content">';
+		$html .='						<div class="main">';
+		$html .='							<h3 class="name">'.$atts['title'].'</h3>';
+		$html .='							<p class="profession">'.$atts['sub_title'].'</p>';
+		if ($atts['location']) {
+			$html .='							<h5><i class="fa fa-map-marker fa-link text-muted"></i>'.$atts['location'].'</h5>';
+		}
+		if ($atts['company']) {
+			$html .='							<h5><i class="fa fa-building-o fa-fw text-muted"></i>'.$atts['company'].'</h5>';
+		}
+		if ($atts['email']) {
+			$html .='							<h5><i class="fa fa-envelope-o fa-fw text-muted"></i> '.$atts['email'].'</h5>';
+		}
+		if ($atts['phone']) {
+			$html .='							<h5><i class="fa fa-phone fa-fw text-muted"></i> '.$atts['phone'].'</h5>';
+		}
+		$html .='						</div>';
+		$html .='						<div class="footer">';
+		if ($atts['show_stars']) {
+			$html .='							<div class="rating">';
+			for ($i=0;$i<$atts['star_count'];$i++){
+				$html .='								<i class="fa fa-star"></i>';			
+			}
+			$html .='							</div>';
+		}
+		$html .='						</div>';
+		$html .='					</div>';
+		$html .='				</div> <!-- end front panel -->';
+		$html .='				<div class="back">';
+		$html .='					<div class="header">';
+		$html .='						<h5 class="motto">'.$atts['motto'].'</h5>';
+		$html .='					</div> ';
+		$html .='					<div class="content">';
+		$html .='						<div class="main">';
+		$html .=' 							'.$content;
+		$html .='						</div>';
+		$html .='					</div>';
+		$html .='					<div class="footer">';
+		$html .='						<div class="social-links text-center">';
+		if ($atts['facebook']) {
+			$html .='							<a href="'.$atts['facebook'].'" class="facebook" target="_blank"><i class="fa fa-facebook fa-fw"></i></a>';
+		}
+		if ($atts['googleplus']) {
+			$html .='							<a href="'.$atts['googleplus'].'" class="google" target="_blank"><i class="fa fa-google-plus fa-fw"></i></a>';
+		}
+		if ($atts['twitter']) {
+			$html .='							<a href="'.$atts['twitter'].'" class="twitter" target="_blank"><i class="fa fa-twitter fa-fw"></i></a>';
+		}			
+		if ($atts['website']) {
+			$html .='							<a href="'.$atts['website'].'" class="website" target="_blank"><i class="fa fa-link fa-fw text-muted"></i></a>';
+		}
+		$html .='						</div>';
+		$html .='					</div>';
+		$html .='				</div> <!-- end back panel -->';
+		$html .='			</div> <!-- end card -->';
+		$html .='		</div> <!-- end card-container -->';
+		$html .='	</div> <!-- end col sm 3 -->';
+
+		return $html;
+		
+	}
 }

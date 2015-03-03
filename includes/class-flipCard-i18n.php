@@ -22,7 +22,7 @@
  * @since      1.0.0
  * @package    flipCard
  * @subpackage flipCard/includes
- * @author     Your Name <email@example.com>
+ * @author     Cem Gencer <o.cem.gencer@gmail.com>
  */
 class flipCard_i18n {
 
