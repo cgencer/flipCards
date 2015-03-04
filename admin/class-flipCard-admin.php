@@ -52,6 +52,25 @@ class flipCard_Admin {
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
 
+		add_action( 'admin_menu', array( $this, 'flipCard_Admin' ) );
+	}
+
+	/**
+	 * Admin Settings Page
+	 */
+	public function flipCard_Admin() {
+
+		add_options_page('flipCard Settings Page', 'flipCard Settings', 'manage_options', 'flipcardsettings', array( $this, 'flipCard_Settings' ));
+	}
+
+	/**
+	 * Admin Settings Page
+	 */
+	public function flipCard_Settings() {
+		if ( !current_user_can( 'manage_options' ) )  {
+			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
+		}
+		echo('<div>Ready... Set... Go....</div>');
 	}
 
 	/**

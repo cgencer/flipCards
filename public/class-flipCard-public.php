@@ -76,7 +76,7 @@ class flipCard_Public {
 		 */
 
 
-//		wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'js/lib/bootstrap/dist/css/bootstrap.min.css', array(), $this->version, 'all' );
+		wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'js/lib/bootstrap/dist/css/bootstrap.min.css', array(), $this->version, 'all' );
 
 		wp_enqueue_style( 'font-awesome', plugin_dir_url( __FILE__ ) . 'js/lib/font-awesome/css/font-awesome.min.css', array(), $this->version, 'all' );
 
