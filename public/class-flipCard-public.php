@@ -51,6 +51,8 @@ class flipCard_Public {
 
 		$this->flipCard = $flipCard;
 		$this->version = $version;
+		$this->urlpath =  WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/';
+		$this->path = WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/';
 
 	}
 
@@ -72,6 +74,11 @@ class flipCard_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+
+
+//		wp_enqueue_style( 'bootstrap', plugin_dir_url( __FILE__ ) . 'js/lib/bootstrap/dist/css/bootstrap.min.css', array(), $this->version, 'all' );
+
+		wp_enqueue_style( 'font-awesome', plugin_dir_url( __FILE__ ) . 'js/lib/font-awesome/css/font-awesome.min.css', array(), $this->version, 'all' );
 
 		wp_enqueue_style( $this->flipCard, plugin_dir_url( __FILE__ ) . 'css/flipCard-public.css', array(), $this->version, 'all' );
 
@@ -95,6 +102,8 @@ class flipCard_Public {
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
+
+//		wp_enqueue_script( 'bootstrap', plugin_dir_url( __FILE__ ) . 'js/lib/bootstrap/dist/js/bootstrap.min.js', array( 'jquery' ), $this->version, false );
 
 		wp_enqueue_script( $this->flipCard, plugin_dir_url( __FILE__ ) . 'js/flipCard-public.js', array( 'jquery' ), $this->version, false );
 

@@ -72,6 +72,7 @@ class flipCard {
 		$this->version = '0.1.0';
 		$this->urlpath =  WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/';
 		$this->path = WP_PLUGIN_DIR.'/'.plugin_basename( dirname(__FILE__) ).'/';
+		define('FLIPCARD_URLPATH', WP_PLUGIN_URL.'/'.plugin_basename( dirname(__FILE__) ).'/' );
 
 		$this->load_dependencies();
 		$this->set_locale();
@@ -155,10 +156,7 @@ class flipCard {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
-		add_action( 'wp_enqueue_scripts', array( __CLASS__ , 'enqueue_supportive_scripts' ) );
-
 		add_shortcode('flipCard', array( __CLASS__, 'render_shortcode' ) );
-
 	}
 
 	/**
@@ -205,8 +203,8 @@ class flipCard {
 		$atts = shortcode_atts( array(
 			'col_md' => '4',
 			'col_sm' => '6',
-			'cover_photo' => $this->urlpath . 'assets/images/rotating_card_thumb.png',
-			'profile_photo' => $this->urlpath . 'assets/images/creative_tim.jpg',
+			'cover_photo' => FLIPCARD_URLPATH . 'assets/images/rotating_card_thumb.png',
+			'profile_photo' => FLIPCARD_URLPATH . 'assets/images/creative_tim.jpg',
 			'title' => __('flipCard' , 'flipCard' ),
 			'sub_title' => __('Flipping cards' , 'flipCard' ),
 			'address' => '--- adres ---',
@@ -224,12 +222,12 @@ class flipCard {
 			), $atts, 'card' );
 
 		if (!$content) {
-			$content = __('Tim symbolizes the creative spirit inside of each and everyone of us. A designer by trade, he enjoys making the World Wide Web a more beautiful place and helping others do the same.' , 'flipCard');
+			$content = __('=- content -=' , 'flipCard');
 		}
 
 		$html  ='<div class="col-md-'.$atts['col_md'].' col-sm-'.$atts['col_sm'].'">';
-		$html .='		 <div class="card-container">';
-		$html .='			<div class="card">';
+		$html .='		 <div class="flipcard-container">';
+		$html .='			<div class="flipcard">';
 		$html .='				<div class="front">';
 		$html .='					<div class="cover">';
 		$html .='						<img src="'.$atts['cover_photo'].'"/>';

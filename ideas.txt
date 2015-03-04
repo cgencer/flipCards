@@ -1,0 +1,1 @@
+* GUI editor with drag'n drop trough icons on content editing
