@@ -70,6 +70,12 @@ class flipCard_Admin {
 	public function flipCard_AdminInit() {
 		register_setting( 'flipCard_settings', 'flipCard_options', 'flipCard_validate_options' );
 
+		add_settings_field( 'template_name', 'Template', 
+							array( $this,'flipCard_pulldown_contType'), 
+							'flipCard_settings_section', 
+							'flipCard_main_section', 
+							array('name' => 'content_type') );
+
 		add_settings_section( 'flipCard_main_section', 'Main Settings', 
 							array( $this, 'flipCard_main_section_callback' ), 
 							'flipCard_settings_section' );
@@ -99,7 +105,7 @@ class flipCard_Admin {
 	}
 
 	public function flipCard_main_section_callback() {
-		echo('<div>Ready... Set... Go....</div>');
+		echo('<div>Settings</div>');
 	}
 
 	public function flipCard_text_field_contType($data) {
@@ -108,6 +114,25 @@ class flipCard_Admin {
 		<input type="text" name="flipCard_options[<?=$name;?>]" value="<?=esc_html( $options[$name] );?>" /><br />
 		<?php
 	}
+
+	public function flipCard_pulldown_contType($data) {
+		extract($data);
+		$options = get_option('flipCard_options'); ?>
+
+    	<select id="time_options" name="sandbox_theme_input_examples[time_options]">
+			<option value="-default-">Select a template...</option><?php
+			$dir = dirname(plugin_dir_path( __FILE__ )) . '/templates';
+			$dh  = opendir($dir);
+			while (false !== ($filename = readdir($dh))) {
+			if(!($filename == "." || $filename == "..")) {
+				$fnx = substr($filename, 0 , (strrpos($filename, ".")));
+				?><option value="<?=$filename?>"><?=$fnx?></option><?php
+				}
+			}
+			?><option value="-new-">Create new template</option>
+		</select>
+		<?php
+    }
 
 	public function flipCard_text_field_width($data) {
 		extract($data);
@@ -125,10 +150,12 @@ class flipCard_Admin {
 
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/flipCard-admin.css', array(), $this->version, 'all' );
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/codemirror.css', array(), $this->version, 'all' );
 	}
 
 	public function enqueue_scripts() {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/flipCard-admin.js', array( 'jquery' ), $this->version, false );
+		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/codemirror.js', array(), $this->version, false );
 	}
 
 }
