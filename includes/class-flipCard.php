@@ -80,12 +80,12 @@ class flipCard {
 		$this->define_public_hooks();
 		global $wpdb;
 
-		require dirname( __FILE__ ) . '/wpscb/load.php';
+//		require dirname( __FILE__ ) . '/wpscb/load.php';
 
-		function my_plugin_init() {
-			$option = new scbOptions('flipCard', __FILE__); 
+//		function my_plugin_init() {
+//			$option = new scbOptions('flipCard', __FILE__); 
 //			require_once dirname(__FILE__) . '/plugin-functions.php';
-		}
+//		}
 //		scb_init('my_plugin_init');
 
 	}
