@@ -20,6 +20,9 @@
  * @subpackage flipCard/admin
  * @author     Cem Gencer <email@example.com>
  */
+define( 'PLUGIN_DIR', dirname(__FILE__).'/' );
+include PLUGIN_DIR . "admin_init.php";
+
 class flipCard_Admin {
 
 	private $plugin_name;
