@@ -1,8 +1,7 @@
 <?php
-if (file_exists(dirname(__FILE__).'/admin/admin-init.php')) {
-    require_once( dirname(__FILE__).'/admin/admin-init.php' );
+if (file_exists(dirname(__FILE__).'/partials/flipCard-admin-settings.php')) {
+  require_once( dirname(__FILE__).'/partials/flipCard-admin-settings.php' );
 }
-require_once (dirname(__FILE__) . '/redux-framework/sample/sample-config.php');
 /**
  * The dashboard-specific functionality of the plugin.
  *
@@ -71,7 +70,14 @@ class flipCard_Admin {
 		}
 	}
 
+	public function flipcard_admin_menu() {
+		add_options_page( 'Settings API', 'Settings API', 'delete_posts', 'settings_api_test', 'flipcard_plugin_page' );
+	}
+
 	public function flipCard_AdminInit() {
+
+
+/*
 		register_setting( 'flipCard_settings', 'flipCard_options', 'flipCard_validate_options' );
 
 		add_settings_field( 'template_name', 'Template', 
@@ -101,6 +107,7 @@ class flipCard_Admin {
 							'flipCard_settings_section', 
 							'flipCard_main_section', 
 							array('name' => 'height') );
+*/
 	}
 
 	public function flipCard_validate_options() {
