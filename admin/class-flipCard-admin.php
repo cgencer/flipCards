@@ -2,6 +2,14 @@
 if (file_exists(dirname(__FILE__).'/partials/flipCard-admin-settings.php')) {
   require_once( dirname(__FILE__).'/partials/flipCard-admin-settings.php' );
 }
+if (file_exists(dirname(__FILE__).'/mustache.php/src/Mustache/Autoloader.php')) {
+  require_once( dirname(__FILE__).'/mustache.php/src/Mustache/Autoloader.php' );
+}
+Mustache_Autoloader::register();
+$m = new Mustache_Engine;
+
+//echo $m->render('Hello, {{planet}}!', array('planet' => 'World')); // "Hello, World!"
+
 /**
  * The dashboard-specific functionality of the plugin.
  *
