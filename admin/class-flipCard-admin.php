@@ -15,8 +15,6 @@ $mustache = new Mustache_Engine(array(
     'cache' 						=> dirname(__FILE__).'/tmp/cache/mustache',
     'cache_file_mode' 				=> 0666, // Please, configure your umask instead of doing this :)
     'cache_lambda_templates' 		=> true,
-    'loader' 						=> new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views'),
-    'partials_loader' 				=> new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views/partials'),
     'helpers' 						=> array('i18n' => function($text) {
         // do something translatey here...
     }),
@@ -29,7 +27,7 @@ $mustache = new Mustache_Engine(array(
     'pragmas' 						=> [Mustache_Engine::PRAGMA_FILTERS],
 ));
 
-$loader = new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views');
+$loader = new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views', array('extension' => 'tpl') );
 $tpl = $loader->load('test'); // equivalent to `file_get_contents(dirname(__FILE__).'/views/foo.mustache');
 echo $mustache->render($tpl);
 //echo $m->render('Hello, {{planet}}!', array('planet' => 'World')); // "Hello, World!"
