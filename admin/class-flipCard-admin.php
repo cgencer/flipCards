@@ -2,17 +2,17 @@
 if (file_exists(dirname(__FILE__).'/partials/flipCard-admin-settings.php')) {
   require_once( dirname(__FILE__).'/partials/flipCard-admin-settings.php' );
 }
+if (file_exists(dirname(__FILE__).'/mustache.php/mustache.php')) {
+  require_once( dirname(__FILE__).'/mustache.php/mustache.php' );
+}
 if (file_exists(dirname(__FILE__).'/mustache-wordpress-cache/src/Mustache_Cache_WordPressCache.php')) {
   require_once( dirname(__FILE__).'/mustache-wordpress-cache/src/Mustache_Cache_WordPressCache.php' );
 }
-if (file_exists(dirname(__FILE__).'/mustache.php/src/Mustache/Autoloader.php')) {
-  require_once( dirname(__FILE__).'/mustache.php/src/Mustache/Autoloader.php' );
-}
-Mustache_Autoloader::register();
 
 $mustache = new Mustache_Engine(array(
     'template_class_prefix' 		=> '__MyTemplates_',
-    'cache' 						=> \Khromov\Mustache_Cache\Mustache_Cache_WordPressCache(),				// dirname(__FILE__).'/tmp/cache/mustache',
+//    'cache' 						=> \Khromov\Mustache_Cache\Mustache_Cache_WordPressCache(),				// dirname(__FILE__).'/tmp/cache/mustache',
+    'cache' 						=> dirname(__FILE__).'/tmp/cache/mustache',
     'cache_file_mode' 				=> 0666, // Please, configure your umask instead of doing this :)
     'cache_lambda_templates' 		=> true,
     'loader' 						=> new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views'),
@@ -29,6 +29,9 @@ $mustache = new Mustache_Engine(array(
     'pragmas' 						=> [Mustache_Engine::PRAGMA_FILTERS],
 ));
 
+$loader = new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views');
+$tpl = $loader->load('test'); // equivalent to `file_get_contents(dirname(__FILE__).'/views/foo.mustache');
+echo $mustache->render($tpl);
 //echo $m->render('Hello, {{planet}}!', array('planet' => 'World')); // "Hello, World!"
 
 /**
