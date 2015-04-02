@@ -1,3 +1,6 @@
 [submodule "admin/mustache.php"]
 	path = admin/mustache.php
 	url = https://github.com/bobthecow/mustache.php.git
+[submodule "admin/mustache-wordpress-cache"]
+	path = admin/mustache-wordpress-cache
+	url = https://github.com/khromov/mustache-wordpress-cache.git
