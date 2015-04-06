@@ -7,3 +7,6 @@
 [submodule "admin/lib/settings-api"]
 	path = admin/lib/settings-api
 	url = https://github.com/tareq1988/wordpress-settings-api-class.git
+[submodule "admin/lib/TGM-Plugin-Activation"]
+	path = admin/lib/TGM-Plugin-Activation
+	url = https://github.com/thomasgriffin/TGM-Plugin-Activation.git
