@@ -1,0 +1,9 @@
+[submodule "admin/lib/mustache-wordpress-cache"]
+	path = admin/lib/mustache-wordpress-cache
+	url = https://github.com/khromov/mustache-wordpress-cache.git
+[submodule "admin/lib/mustachephp"]
+	path = admin/lib/mustachephp
+	url = https://github.com/bobthecow/mustache.php.git
+[submodule "admin/lib/settings-api"]
+	path = admin/lib/settings-api
+	url = https://github.com/tareq1988/wordpress-settings-api-class.git

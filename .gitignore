@@ -13,3 +13,4 @@ wp-content/wp-cache-config.php
 public/js/lib/
 node_modules/
 .DS_Store
+admin/lib/

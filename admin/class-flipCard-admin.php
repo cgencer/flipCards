@@ -1,35 +1,9 @@
 <?php
-if (file_exists(dirname(__FILE__).'/partials/flipCard-admin-settings.php')) {
-  require_once( dirname(__FILE__).'/partials/flipCard-admin-settings.php' );
-}
-if (file_exists(dirname(__FILE__).'/mustache.php/mustache.php')) {
-  require_once( dirname(__FILE__).'/mustache.php/mustache.php' );
-}
-if (file_exists(dirname(__FILE__).'/mustache-wordpress-cache/src/Mustache_Cache_WordPressCache.php')) {
-  require_once( dirname(__FILE__).'/mustache-wordpress-cache/src/Mustache_Cache_WordPressCache.php' );
-}
+require_once( dirname(__FILE__).'/partials/flipCard-admin-settings.php' );
+require_once( dirname(__FILE__).'/lib/mustachephp/mustache.php' );
+require_once( dirname(__FILE__).'/lib/mustache-wordpress-cache/src/Mustache_Cache_WordPressCache.php' );
+require_once( dirname(__FILE__).'/lib/settings-api/class.settings-api.php' );
 
-$mustache = new Mustache_Engine(array(
-    'template_class_prefix' 		=> '__MyTemplates_',
-//    'cache' 						=> \Khromov\Mustache_Cache\Mustache_Cache_WordPressCache(),				// dirname(__FILE__).'/tmp/cache/mustache',
-    'cache' 						=> dirname(__FILE__).'/tmp/cache/mustache',
-    'cache_file_mode' 				=> 0666, // Please, configure your umask instead of doing this :)
-    'cache_lambda_templates' 		=> true,
-    'helpers' 						=> array('i18n' => function($text) {
-        // do something translatey here...
-    }),
-    'escape' 						=> function($value) {
-        return htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
-    },
-    'charset' 						=> 'UTF-8',
-    'logger' 						=> new Mustache_Logger_StreamLogger('php://stderr'),
-    'strict_callables' 				=> true,
-    'pragmas' 						=> [Mustache_Engine::PRAGMA_FILTERS],
-));
-
-$loader = new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views', array('extension' => 'tpl') );
-$tpl = $loader->load('test'); // equivalent to `file_get_contents(dirname(__FILE__).'/views/foo.mustache');
-echo $mustache->render($tpl);
 //echo $m->render('Hello, {{planet}}!', array('planet' => 'World')); // "Hello, World!"
 
 /**
@@ -57,12 +31,34 @@ class flipCard_Admin {
 
 	private $plugin_name;
 	private $version;
+    private $settings_api;
 
 	public function __construct( $plugin_name, $version ) {
 
 		$this->plugin_name = $plugin_name;
 		$this->version = $version;
+		$this->settings_api = new WeDevs_Settings_API;
+
 		define('VERSION', $version);
+
+		$this->mustache = new Mustache_Engine(array(
+			'template_class_prefix' 		=> '__MyTemplates_',
+//			'cache' 						=> \Khromov\Mustache_Cache\Mustache_Cache_WordPressCache(),				// dirname(__FILE__).'/tmp/cache/mustache',
+			'cache' 						=> dirname(__FILE__).'/tmp/cache/mustache',
+			'cache_file_mode' 				=> 0666, // Please, configure your umask instead of doing this :)
+			'cache_lambda_templates' 		=> true,
+			'helpers' 						=> array('i18n' => function($text) {
+				// do something translatey here...
+			}),
+			'escape' 						=> function($value) {
+				return htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
+			},
+			'charset' 						=> 'UTF-8',
+			'logger' 						=> new Mustache_Logger_StreamLogger('php://stderr'),
+			'strict_callables' 				=> true,
+			'pragmas' 						=> [Mustache_Engine::PRAGMA_FILTERS],
+		));
+		$this->loader = new Mustache_Loader_FilesystemLoader(dirname(__FILE__).'/views', array('extension' => 'tpl') );
 
 		add_action( 'admin_menu', array( $this, 'flipCard_Admin' ) );
 		register_activation_hook( __FILE__, array( $this, 'flipCard_Options' ) );
@@ -78,15 +74,17 @@ class flipCard_Admin {
 		if ( !current_user_can( 'manage_options' ) )  {
 			wp_die( __( 'You do not have sufficient permissions to access this page.' ) );
 		} ?>
-			<div id="">
-				<form name="flipCard_options_form_settings_api" method="post" action="options.php">
-					<?php settings_fields('flipCard_Settings'); ?>
-					<?php do_settings_sections( 'flipCard_settings_section' ); ?>
-					<input type="submit" value="Submit" class="button-primary" />
-				</form>
-			</div>
-		<?php
-	}
+		<div class="wrap">
+			<form name="flipCard_options_form_settings_api" method="post" action="options.php">
+<?php	$this->settings_api->show_navigation();
+        $this->settings_api->show_forms();
+
+		settings_fields('flipCard_Settings');
+		do_settings_sections( 'flipCard_settings_section' ); ?>
+				<input type="submit" value="Submit" class="button-primary" />
+			</form>
+		</div>
+<?php }
 
 	public function flipCard_Options() {
 		if( get_option('flipCard_options') === false ) {
@@ -97,12 +95,22 @@ class flipCard_Admin {
 		}
 	}
 
-	public function flipcard_admin_menu() {
-		add_options_page( 'Settings API', 'Settings API', 'delete_posts', 'settings_api_test', 'flipcard_plugin_page' );
-	}
-
 	public function flipCard_AdminInit() {
 
+//		$tpl = $this->loader->load('test'); // equivalent to `file_get_contents(dirname(__FILE__).'/views/foo.mustache');
+//		echo $this->mustache->render($tpl);
+
+		require('views/admin_settings.php');
+
+		$this->settings_api->set_sections( $sections );
+		$this->settings_api->set_fields( $fields );
+		$this->settings_api->admin_init();
+/*
+        $this->settings_api->set_sections( $this->get_settings_sections() );
+        $this->settings_api->set_fields( $this->get_settings_fields() );
+        //initialize settings
+        $this->settings_api->admin_init();
+*/
 
 /*
 		register_setting( 'flipCard_settings', 'flipCard_options', 'flipCard_validate_options' );
