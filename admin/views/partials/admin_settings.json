@@ -1,0 +1,10 @@
+[{
+	"id":"admin_settings_basic",
+	"title":"Basic Settings"
+},{
+	"id":"admin_settings_advanced",
+	"title":"Advanced Settings"
+},{
+	"id":"admin_settings_other",
+	"title":"Other Settings"
+}]
