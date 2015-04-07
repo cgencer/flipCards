@@ -14,3 +14,5 @@ public/js/lib/
 node_modules/
 .DS_Store
 admin/lib/
+public/js/lib/
+admin/js/lib/

@@ -1,0 +1,30 @@
+[
+	{
+		"name":"apikey",
+		"label":"API Key",
+		"desc":"The API Key sent to you upon purchasing our product",
+		"type":"text",
+		"default":""
+	},{
+		"name":"apipass",
+		"label":"API Pass",
+		"desc":"The API Password you created after the purchase has been made",
+		"type":"password",
+		"default":""
+	},{
+		"name":"name",
+		"label":"Your Name",
+		"desc":"Your name, so we can address you properly",
+		"type":"text",
+		"default":""
+	},{
+		"name":"radio",
+		"label":"Data sharing",
+		"desc":"Collect your usage data to improve our products",
+		"type":"radio",
+		"options":{
+			"yes":"Yes",
+			"no":"No"
+		}
+	}
+]

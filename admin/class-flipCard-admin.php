@@ -4,6 +4,7 @@ require_once( dirname(__FILE__).'/partials/flipCard-admin-settings.php' );
 require_once( dirname(__FILE__).'/lib/mustachephp/mustache.php' );
 require_once( dirname(__FILE__).'/lib/mustache-wordpress-cache/src/Mustache_Cache_WordPressCache.php' );
 require_once( dirname(__FILE__).'/lib/settings-api/class.settings-api.php' );
+require_once( dirname(dirname(__FILE__)).'/includes/imgplaceholder.php' );
 
 //echo $m->render('Hello, {{planet}}!', array('planet' => 'World')); // "Hello, World!"
 
@@ -71,9 +72,15 @@ class flipCard_Admin {
 
 	public function flipCard_reqPlugins() {
 		$plugins = array(
+	        array(
+            	'name'               => 'Envato Toolkit', // The plugin name.
+            	'slug'               => 'envato-toolkit', // The plugin slug (typically the folder name).
+        	    'required'           => false, // If false, the plugin is only 'recommended' instead of required.
+    	        'external_url'       => 'https://github.com/envato/envato-wordpress-toolkit.git', // If set, overrides default API URL and points to an external URL.
+	        ),
 			array(
-				'name'      => 'BuddyPress',
-				'slug'      => 'buddypress',
+				'name'      => 'Option Tree',
+				'slug'      => 'option-tree',
 				'required'  => false,
 			)
 		);
@@ -191,88 +198,8 @@ function array2json($arr) {
 		$this->settings_api->set_sections( $sections );
 		$this->settings_api->set_fields( $fields );
 		$this->settings_api->admin_init();
-
-/*
-		register_setting( 'flipCard_settings', 'flipCard_options', 'flipCard_validate_options' );
-
-		add_settings_field( 'template_name', 'Template', 
-							array( $this,'flipCard_pulldown_contType'), 
-							'flipCard_settings_section', 
-							'flipCard_main_section', 
-							array('name' => 'content_type') );
-
-		add_settings_section( 'flipCard_main_section', 'Main Settings', 
-							array( $this, 'flipCard_main_section_callback' ), 
-							'flipCard_settings_section' );
-
-		add_settings_field( 'content_type', 'Content Type', 
-							array( $this,'flipCard_text_field_contType'), 
-							'flipCard_settings_section', 
-							'flipCard_main_section', 
-							array('name' => 'content_type') );
-
-		add_settings_field( 'width', 'Wall Width', 
-							array( $this,'flipCard_text_field_width'), 
-							'flipCard_settings_section', 
-							'flipCard_main_section', 
-							array('name' => 'width') );
-
-		add_settings_field( 'height', 'Wall Height', 
-							array( $this,'flipCard_text_field_height'), 
-							'flipCard_settings_section', 
-							'flipCard_main_section', 
-							array('name' => 'height') );
-*/
 	}
 
-	public function flipCard_validate_options() {
-		$input['version'] = VERSION;
-		return $input;
-	}
-
-	public function flipCard_main_section_callback() {
-		echo('<div>Settings</div>');
-	}
-
-	public function flipCard_text_field_contType($data) {
-		extract($data);
-		$options = get_option('flipCard_options'); ?>
-		<input type="text" name="flipCard_options[<?=$name;?>]" value="<?=esc_html( $options[$name] );?>" /><br />
-		<?php
-	}
-
-	public function flipCard_pulldown_contType($data) {
-		extract($data);
-		$options = get_option('flipCard_options'); ?>
-
-		<select id="time_options" name="sandbox_theme_input_examples[time_options]">
-			<option value="-default-">Select a template...</option><?php
-			$dir = dirname(plugin_dir_path( __FILE__ )) . '/templates';
-			$dh  = opendir($dir);
-			while (false !== ($filename = readdir($dh))) {
-			if(!($filename == "." || $filename == "..")) {
-				$fnx = substr($filename, 0 , (strrpos($filename, ".")));
-				?><option value="<?=$filename?>"><?=$fnx?></option><?php
-				}
-			}
-			?><option value="-new-">Create new template</option>
-		</select>
-		<?php
-	}
-
-	public function flipCard_text_field_width($data) {
-		extract($data);
-		$options = get_option('flipCard_options'); ?>
-		<input type="text" name="flipCard_options[<?=$width;?>]" value="<?=esc_html( $options[$width] );?>" /><br />
-		<?php
-	}
-
-	public function flipCard_text_field_height($data) {
-		extract($data);
-		$options = get_option('flipCard_options'); ?>
-		<input type="text" name="flipCard_options[<?=$height;?>]" value="<?=esc_html( $options[$height] );?>" /><br />
-		<?php
-	}
 
 	public function enqueue_styles() {
 		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/flipCard-admin.css', array(), $this->version, 'all' );

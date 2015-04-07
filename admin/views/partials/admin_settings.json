@@ -1,10 +1,12 @@
-[{
-	"id":"admin_settings_basic",
-	"title":"Basic Settings"
-},{
-	"id":"admin_settings_advanced",
-	"title":"Advanced Settings"
-},{
-	"id":"admin_settings_other",
-	"title":"Other Settings"
-}]
+[
+	{
+		"id":"admin_settings_basic",
+		"title":"Basic Settings"
+	},{
+		"id":"admin_settings_personal",
+		"title":"Personal Settings"
+	},{
+		"id":"admin_settings_support",
+		"title":"Support Line"
+	}
+]
